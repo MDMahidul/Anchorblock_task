@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      main_font: ["Inter"],
+    },
   },
   plugins: [require("flowbite/plugin")],
 };
