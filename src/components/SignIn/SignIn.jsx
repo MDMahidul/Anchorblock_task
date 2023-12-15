@@ -1,9 +1,18 @@
-import { Card, Button, Label, TextInput } from "flowbite-react";
-import React from 'react';
+import { Card, Button, Label } from "flowbite-react";
+import { useForm } from "react-hook-form";
 import Paper from '../../assets/paper.svg';
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {};
+
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card
@@ -20,7 +29,10 @@ const SignIn = () => {
               Sign In to continue with Stack
             </p>
           </div>
-          <form className="flex flex-col gap-4">
+          <form
+            className="flex flex-col gap-4"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="mb-2">
               <div className="mb-2 block">
                 <Label
@@ -29,13 +41,23 @@ const SignIn = () => {
                   value="Email"
                 />
               </div>
-              <TextInput
-                className="text-base"
-                id="email1"
+              <input
                 type="email"
+                id="email"
+                name="email"
+                className={`input-field  mb-1 ${
+                  errors.email
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500 focus:ring-opacity-20"
+                    : ""
+                }`}
                 placeholder="Enter Email"
-                required
+                {...register("email", { required: true })}
               />
+              {errors.email && (
+                <span className="text-sm text-red-500">
+                  This field is required
+                </span>
+              )}
             </div>
             <div>
               <div className="mb-2 block">
@@ -45,13 +67,23 @@ const SignIn = () => {
                   value="Password"
                 />
               </div>
-              <TextInput
-                className="text-base"
-                id="password1"
+              <input
+                className={`input-field  mb-1 ${
+                  errors.password
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500 focus:ring-opacity-20"
+                    : ""
+                }`}
+                id="password"
                 type="password"
-                required
+                name="password"
                 placeholder="******"
+                {...register("password", { required: true })}
               />
+              {errors.password && (
+                <span className="text-sm text-red-500">
+                  This field is required
+                </span>
+              )}
             </div>
             <Button
               className="my-3 bg-[#6941C6] hover:!bg-[#5927ce]"

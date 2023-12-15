@@ -1,9 +1,24 @@
-import { Card, Button,Label, TextInput } from "flowbite-react";
-import React from "react";
+import { Card, Button, Label } from "flowbite-react";
+import { useForm } from "react-hook-form";
 import Paper from "../../assets/paper.svg";
 import { Link } from "react-router-dom";
+import PasswordStrengthBar from "react-password-strength-bar";
+import { useState } from "react";
 
 const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm(); 
+  
+  const [passwordScore, setPasswordScore] = useState();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <Card
@@ -20,7 +35,7 @@ const SignUp = () => {
             Sign up to join with Stack
           </p>
         </div>
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-2">
             <div className="mb-2 block">
               <Label
@@ -32,10 +47,20 @@ const SignUp = () => {
             <input
               type="email"
               id="email"
-              className="input-field"
-              placeholder="name@flowbite.com"
-              required
+              name="email"
+              className={`input-field  mb-1 ${
+                errors.email
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-500 focus:ring-opacity-20"
+                  : ""
+              }`}
+              placeholder="Enter Email"
+              {...register("email", { required: true })}
             />
+            {errors.email && (
+              <span className="text-sm text-red-500">
+                This field is required
+              </span>
+            )}
           </div>
           <div>
             <div className="mb-2 block">
@@ -45,16 +70,36 @@ const SignUp = () => {
                 value="Password"
               />
             </div>
-            <TextInput
-              className="text-base"
-              id="password1"
+            <input
+              className={`input-field  mb-1 ${
+                errors.password
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-500 focus:ring-opacity-20"
+                  : ""
+              }`}
+              id="password"
               type="password"
-              required
+              name="password"
               placeholder="******"
+              onChange={() => watch("password")}
+              {...register("password", { required: true })}
+            />
+            {errors.password && (
+              <span className="text-sm text-red-500">
+                This field is required
+              </span>
+            )}
+            <PasswordStrengthBar
+            className="mt-3 "
+            style={{height:"20px"}}
+              password={watch("password")}
+              minLength={4}
+              shortScoreWord=""
+              scoreWords={""}
+              onChangeScore={setPasswordScore}
             />
           </div>
           <Button
-            className="my-3 bg-[#6941C6] hover:!bg-[#5927ce]"
+            className="mb-3 bg-[#6941C6] hover:!bg-[#5927ce]"
             type="submit"
           >
             Sign Up
