@@ -11,4 +11,13 @@ body {
     .input-field{
         @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#6941C6] focus:border-[#6941C6] focus:border-opacity-40 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#6941C6] dark:focus:border-[#6941C6] focus:ring-4 focus:ring-opacity-20 	
     }
+    .nav-ul{
+      @apply font-medium text-base flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700
+    }
+    .nav-item{
+      @apply block py-2 px-3 text-white rounded text-base hover:bg-gray-100 hover:text-[#6941C6] md:hover:bg-transparent md:border-0 md:hover:text-gray-300 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent
+    }
+    .toggle-btn{
+      @apply inline-flex items-center p-2 w-10 h-10 justify-center text-sm  rounded-lg md:hidden hover:bg-gray-50 hover:bg-opacity-30 focus:outline-none focus:ring-2 focus:ring-gray-50  dark:hover:bg-gray-700 dark:focus:ring-gray-600
+    }
 }
