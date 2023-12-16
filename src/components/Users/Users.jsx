@@ -1,6 +1,6 @@
-import { Button } from 'flowbite-react';
-import React, { useState } from 'react';
-import { FiPlus, FiUploadCloud,FiArrowDown } from "react-icons/fi";
+import { Button, Checkbox } from 'flowbite-react';
+import React, { useEffect, useState } from 'react';
+import { FiPlus, FiUploadCloud,FiArrowDown,FiMinus } from "react-icons/fi";
 import { LuPen } from "react-icons/lu";
 import { RiDeleteBinLine } from "react-icons/ri";
 import './Users.css'
@@ -9,7 +9,8 @@ import { useQuery } from 'react-query';
 const Users = () => {
   const [perPageUsers,setPerPageUSers] = useState([]);
   const [page,setPage] = useState(1);
-  console.log(page);
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   /* fetch data from API */
   const { data: users = [], refetch } = useQuery({
@@ -23,6 +24,36 @@ const Users = () => {
     },
   });
 
+  /* controll  */
+  useEffect(() => {
+     /* Update the selectAll state when selectedItems change */
+    const isAllSelected = selectedItems.length === perPageUsers.length;
+    setSelectAll(isAllSelected);
+  }, [selectedItems, perPageUsers]);
+
+  /* toggle the select all items  */
+   const toggleSelectAll = () => {
+     setSelectAll(!selectAll);
+     if (!selectAll) {
+       setSelectedItems(perPageUsers.map((user) => user.id));
+     } else {
+       setSelectedItems([]);
+     }
+   };
+
+   /* control item checked and unchecked */
+   const toggleSelectItem = (userId) => {
+     if (selectedItems.includes(userId)) {
+       setSelectedItems(selectedItems.filter((id) => id !== userId));
+     } else {
+       setSelectedItems([...selectedItems, userId]);
+     }
+   };
+
+   /* check the indeterminate state */
+  const isIndeterminate = selectedItems.length > 0 && selectedItems.length < perPageUsers.length;
+
+  /* controll pagination */
   const handleNext=()=>{
     setPage(page+1);
   }
@@ -39,7 +70,7 @@ const Users = () => {
               <FiUploadCloud className="me-2 text-xl" />
               Import
             </Button>
-            <Button className="font-semibold bg-[#6941C6]">
+            <Button className="font-semibold bg-[#6941C6] hover:!bg-[#5c2fc7]">
               <FiPlus className="me-2 text-xl" /> Add User
             </Button>
           </div>
@@ -49,7 +80,18 @@ const Users = () => {
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-[#667085] bg-gray-50 dark:bg-gray-700 dark:text-gray-400 font-medium">
                 <tr>
-                  <th scope="col" className="px-6 py-3 flex items-start gap-5">
+                  <th scope="col" className="px-6 py-3 flex items-center gap-5">
+                    <input
+                      checked={selectAll}
+                      onChange={toggleSelectAll}
+                      indeterminate={!!isIndeterminate}
+                      id="purple-checkbox"
+                      type="checkbox"
+                      className="relative z-50 bg-transparent w-5 h-5 text-[#6941C6] bg-gray-100 border-[#6941C6] rounded focus:ring-white"
+                    />
+                    {isIndeterminate && (
+                      <FiMinus className="text-[#6941C6] absolute top-[16px] left-[28px]" />
+                    )}
                     User Info
                     <FiArrowDown className="text-base" />
                   </th>
@@ -75,7 +117,11 @@ const Users = () => {
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center gap-3"
                     >
                       <label className="custom-checkbox me-5">
-                        <input type="checkbox" />
+                        <input
+                          type="checkbox"
+                          checked={selectedItems.includes(user.id)}
+                          onChange={() => toggleSelectItem(user.id)}
+                        />
                         <span className="custom-checkmark"></span>
                       </label>
                       <img
@@ -121,7 +167,7 @@ const Users = () => {
               <Button
                 disabled={page < users.total_pages || page == 1}
                 color="light"
-                onClick={()=> handlePrev()}
+                onClick={() => handlePrev()}
               >
                 Previous
               </Button>
@@ -129,9 +175,9 @@ const Users = () => {
                 Page {page} of {users.total_pages}
               </p>
               <Button
-                disabled={page == users.total_pages }
+                disabled={page == users.total_pages}
                 color="light"
-                onClick={()=>handleNext()}
+                onClick={() => handleNext()}
               >
                 Next
               </Button>
