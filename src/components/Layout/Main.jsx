@@ -4,10 +4,12 @@ import { Outlet } from 'react-router-dom';
 
 const Main = () => {
     return (
-        <div>
-            <Navbar/>
-            <Outlet/>
+      <div>
+        <Navbar />
+        <div className="max-w-screen-xl mx-auto px-4">
+          <Outlet />
         </div>
+      </div>
     );
 };
 

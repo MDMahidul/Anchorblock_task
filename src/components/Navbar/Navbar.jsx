@@ -25,7 +25,7 @@ const NavBar = () => {
                 className="w-10 h-10 rounded-full"
                 src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
                 alt="user photo"
-              ></img>
+              />
             </div>
             <button
               data-collapse-toggle="navbar-sticky"
@@ -44,7 +44,7 @@ const NavBar = () => {
           >
             <ul className="nav-ul">
               <li className="nav-item">
-                <ActiveLink className="nav-item" to="dashboard">
+                <ActiveLink className="nav-item" to="home">
                   Home
                 </ActiveLink>
               </li>
