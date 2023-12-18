@@ -1,8 +1,21 @@
-# React + Vite
+# Name Of The Task: Anchorblock Frontend Developer task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features of the project:
+* Login and Sign Up page
+* Dashboard and Users Page
+* Fetch users list from https://reqres.in/ api 
 
-Currently, two official plugins are available:
+* Unabled to add redux toolkit(though i'm experienced in context api) and login and signup through the https://reqres.in/ api
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Used packages/ technology:
+##### Frontend
+* React JS
+* React query
+* Tailwind CSS, Flowbite
+* fontawesome icons
+* react-password-strength-bar
+* react-hook-form
+
+
+### Here is the live link of the project:
+Click here: [Live Link](https://65807f128b2c286e3a44df68--fanciful-centaur-c5a295.netlify.app/)
